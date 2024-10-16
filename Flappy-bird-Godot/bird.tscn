@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyvurfwvhfn52"]
+
+[ext_resource type="Script" path="res://Bird.cs" id="1_0pe7g"]
+[ext_resource type="Texture2D" uid="uid://cvmjth3nelo8i" path="res://TClPwu-removebg-preview.png" id="2_du3ho"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ae6e8"]
+radius = 55.0091
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dgn7n"]
+radius = 56.0089
+
+[node name="Bird" type="CharacterBody2D"]
+script = ExtResource("1_0pe7g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(26.5, 3.00002)
+scale = Vector2(0.308955, 0.39008)
+texture = ExtResource("2_du3ho")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(24, 1)
+shape = SubResource("CircleShape2D_ae6e8")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(25, 2)
+shape = SubResource("CircleShape2D_dgn7n")
+
+[connection signal="area_shape_entered" from="Area2D" to="." method="OnCollision"]

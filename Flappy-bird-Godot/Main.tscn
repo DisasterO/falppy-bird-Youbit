@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://bd5dcxqwjyjww"]
+
+[ext_resource type="Script" path="res://Main.cs" id="1_m41qu"]
+[ext_resource type="PackedScene" uid="uid://dyvurfwvhfn52" path="res://bird.tscn" id="2_axox5"]
+[ext_resource type="PackedScene" uid="uid://dt1qnnksxcnct" path="res://Pipe.tscn" id="2_y6fx4"]
+[ext_resource type="Texture2D" uid="uid://ct3u2n8wksrng" path="res://background-1.png" id="4_c2m3i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j65vc"]
+line_spacing = 1.0
+font_size = 67
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_odl67"]
+size = Vector2(1467, 20)
+
+[node name="Node" type="Node"]
+script = ExtResource("1_m41qu")
+pipeScene = ExtResource("2_y6fx4")
+
+[node name="Lable" type="Label" parent="."]
+top_level = true
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.026
+anchor_right = 0.599
+anchor_bottom = 0.106
+offset_left = 5.0
+offset_top = 0.1
+offset_right = 0.199951
+offset_bottom = 40.1
+text = "0"
+label_settings = SubResource("LabelSettings_j65vc")
+
+[node name="Bird" parent="." instance=ExtResource("2_axox5")]
+
+[node name="BirdSpawnPosition" type="Marker2D" parent="."]
+position = Vector2(496, 320)
+
+[node name="PipeSpawnPosition" type="Marker2D" parent="."]
+position = Vector2(1300, 325)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(177.5, 328)
+scale = Vector2(1.21181, 1.26172)
+motion_mirroring = Vector2(234, 0)
+
+[node name="Background-1" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(0, -1.18887)
+scale = Vector2(1, 1.00464)
+texture = ExtResource("4_c2m3i")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+position = Vector2(635, 268)
+scale = Vector2(1.21181, 1.26172)
+motion_mirroring = Vector2(237.85, 0)
+
+[node name="Background-1" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+position = Vector2(193.926, 46.7616)
+scale = Vector2(1.00072, 1.00387)
+texture = ExtResource("4_c2m3i")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(723, 766)
+shape = SubResource("RectangleShape2D_odl67")
+
+[connection signal="AddScore" from="Bird" to="." method="OnAddScore"]
+[connection signal="BirdDied" from="Bird" to="." method="OnBirdDied"]
+[connection signal="timeout" from="Timer" to="." method="OnPipeSpawn"]
